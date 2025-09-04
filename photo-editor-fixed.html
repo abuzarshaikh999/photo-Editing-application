@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhotoPro - AI Photo Editor</title>
+    <link rel="stylesheet" href="photo-editor.css">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-left">
+            <div class="logo">PhotoPro</div>
+        </div>
+        <div class="nav-center">
+            <div class="search-bar">
+                <input type="text" placeholder="Search tools, effects, or tutorials...">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+        <div class="nav-right">
+            <div class="profile-menu">
+                <div class="profile-avatar">👤</div>
+                <div class="settings-icon">⚙️</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Panel Toggle -->
+    <button class="mobile-panel-toggle" id="mobilePanelToggle">⚙️</button>
+    
+    <div class="app-container">
+        <!-- Left Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-toggle" id="sidebarToggle">☰</div>
+            
+            <div class="sidebar-item active">
+                <span class="icon">🏠</span>
+                <span class="label">Home</span>
+            </div>
+            
+            <div class="sidebar-item">
+                <span class="icon">📁</span>
+                <span class="label">Import Photo</span>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="section-title">Tools</div>
+                <div class="sidebar-item" data-tab="basic">
+                    <span class="icon">✂️</span>
+                    <span class="label">Basic Editing</span>
+                </div>
+                <div class="sidebar-item" data-tab="color">
+                    <span class="icon">🎨</span>
+                    <span class="label">Color</span>
+                </div>
+                <div class="sidebar-item" data-tab="retouch">
+                    <span class="icon">🖌️</span>
+                    <span class="label">Retouching</span>
+                </div>
+                <div class="sidebar-item" data-tab="layers">
+                    <span class="icon">📚</span>
+                    <span class="label">Layers</span>
+                </div>
+                <div class="sidebar-item" data-tab="selection">
+                    <span class="icon">🎯</span>
+                    <span class="label">Selection</span>
+                </div>
+                <div class="sidebar-item" data-tab="filters">
+                    <span class="icon">✨</span>
+                    <span class="label">Filters</span>
+                </div>
+                <div class="sidebar-item" data-tab="text">
+                    <span class="icon">📝</span>
+                    <span class="label">Text</span>
+                </div>
+                <div class="sidebar-item" data-tab="advanced">
+                    <span class="icon">⚡</span>
+                    <span class="label">Advanced</span>
+                </div>
+                <div class="sidebar-item" data-tab="export">
+                    <span class="icon">📤</span>
+                    <span class="label">Export</span>
+                </div>
+                <div class="sidebar-item" data-tab="ai">
+                    <span class="icon">🤖</span>
+                    <span class="label">AI</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Canvas Toolbar -->
+            <div class="canvas-toolbar">
+                <div class="toolbar-group">
+                    <button class="tool-btn" data-tool="crop" title="Crop">✂️</button>
+                    <button class="tool-btn" data-tool="rotate" title="Rotate 90°">🔄</button>
+                    <button class="tool-btn" data-tool="resize" title="Resize">📏</button>
+                </div>
+                <div class="toolbar-group">
+                    <button class="tool-btn" data-tool="zoomIn" title="Zoom In">🔍+</button>
+                    <button class="tool-btn" data-tool="zoomOut" title="Zoom Out">🔍-</button>
+                </div>
+                <div class="toolbar-group">
+                    <button class="tool-btn" data-tool="undo" title="Undo">↶</button>
+                    <button class="tool-btn" data-tool="redo" title="Redo">↷</button>
+                </div>
+            </div>
+
+            <!-- Canvas Area -->
+            <div class="canvas-area">
+                <canvas id="mainCanvas" style="display: none;"></canvas>
+                <div class="canvas-placeholder" id="canvasPlaceholder">
+                    <div class="upload-prompt">
+                        <div class="upload-icon">📷</div>
+                        <h3>Import a photo to start editing</h3>
+                        <p>Drag & drop or click to select</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Panel -->
+        <aside class="right-panel">
+            <div class="panel-tabs">
+                <div class="tab active" data-panel="basic">Basic</div>
+                <div class="tab" data-panel="color">Color</div>
+                <div class="tab" data-panel="retouch">Retouch</div>
+                <div class="tab" data-panel="layers">Layers</div>
+                <div class="tab" data-panel="selection">Selection</div>
+                <div class="tab" data-panel="filters">Filters</div>
+                <div class="tab" data-panel="text">Text</div>
+                <div class="tab" data-panel="advanced">Advanced</div>
+                <div class="tab" data-panel="export">Export</div>
+                <div class="tab" data-panel="ai">AI</div>
+            </div>
+
+            <div class="panel-content">
+                <!-- Basic Editing Panel -->
+                <div class="panel-section active" id="basic-panel">
+                    <h4>Basic Editing</h4>
+                    <div class="control-group">
+                        <label>Brightness: <span id="brightnessValue">0</span></label>
+                        <input type="range" min="-100" max="100" value="0" class="slider" id="brightnessSlider">
+                    </div>
+                    <div class="control-group">
+                        <label>Contrast: <span id="contrastValue">0</span></label>
+                        <input type="range" min="-100" max="100" value="0" class="slider" id="contrastSlider">
+                    </div>
+                    <div class="control-group">
+                        <label>Saturation: <span id="saturationValue">0</span></label>
+                        <input type="range" min="-100" max="100" value="0" class="slider" id="saturationSlider">
+                    </div>
+                    <div class="control-group">
+                        <label>Blur: <span id="blurValue">0</span></label>
+                        <input type="range" min="0" max="10" value="0" step="0.1" class="slider" id="blurSlider">
+                    </div>
+                    <button class="reset-btn" onclick="resetFilters()">Reset All</button>
+                </div>
+
+                <!-- Color Panel -->
+                <div class="panel-section" id="color-panel">
+                    <h4>Color & Tone</h4>
+                    <div class="control-group">
+                        <label>Hue: <span id="hueValue">0</span></label>
+                        <input type="range" min="-180" max="180" value="0" class="slider" id="hueSlider">
+                    </div>
+                    <div class="control-group">
+                        <label>Temperature: <span id="temperatureValue">0</span></label>
+                        <input type="range" min="-100" max="100" value="0" class="slider" id="temperatureSlider">
+                    </div>
+                    <div class="control-group">
+                        <label>Tint: <span id="tintValue">0</span></label>
+                        <input type="range" min="-100" max="100" value="0" class="slider" id="tintSlider">
+                    </div>
+                    <div class="control-group">
+                        <label>Vibrance: <span id="vibranceValue">0</span></label>
+                        <input type="range" min="-100" max="100" value="0" class="slider" id="vibranceSlider">
+                    </div>
+                    <div class="control-group">
+                        <label>Sepia: <span id="sepiaValue">0</span></label>
+                        <input type="range" min="0" max="100" value="0" class="slider" id="sepiaSlider">
+                    </div>
+                    <div class="control-group">
+                        <label>Invert: <span id="invertValue">0</span></label>
+                        <input type="range" min="0" max="100" value="0" class="slider" id="invertSlider">
+                    </div>
+                    <div class="filter-presets">
+                        <button class="preset-btn" onclick="applyPreset('vintage')">Vintage</button>
+                        <button class="preset-btn" onclick="applyPreset('bw')">B&W</button>
+                        <button class="preset-btn" onclick="applyPreset('warm')">Warm</button>
+                        <button class="preset-btn" onclick="applyPreset('cool')">Cool</button>
+                    </div>
+                </div>
+
+                <!-- Retouch Panel -->
+                <div class="panel-section" id="retouch-panel">
+                    <h4>Retouching</h4>
+                    <div class="tool-grid">
+                        <button class="grid-btn" onclick="setTool('crop')">Crop</button>
+                        <button class="grid-btn" onclick="rotateImage(90)">Rotate 90°</button>
+                        <button class="grid-btn" onclick="flipImage('horizontal')">Flip H</button>
+                        <button class="grid-btn" onclick="flipImage('vertical')">Flip V</button>
+                    </div>
+                    <div class="control-group">
+                        <label>Resize Width: <span id="widthValue">-</span></label>
+                        <input type="number" id="widthInput" placeholder="Width" class="size-input">
+                    </div>
+                    <div class="control-group">
+                        <label>Resize Height: <span id="heightValue">-</span></label>
+                        <input type="number" id="heightInput" placeholder="Height" class="size-input">
+                    </div>
+                    <button class="grid-btn" onclick="resizeImage()">Apply Resize</button>
+                </div>
+
+                <!-- Layers Panel -->
+                <div class="panel-section" id="layers-panel">
+                    <h4>Filters & Effects</h4>
+                    <div class="filter-grid">
+                        <button class="filter-btn" onclick="applyFilter('grayscale')">Grayscale</button>
+                        <button class="filter-btn" onclick="applyFilter('negative')">Negative</button>
+                        <button class="filter-btn" onclick="applyFilter('emboss')">Emboss</button>
+                        <button class="filter-btn" onclick="applyFilter('sharpen')">Sharpen</button>
+                        <button class="filter-btn" onclick="applyFilter('edge')">Edge Detect</button>
+                        <button class="filter-btn" onclick="applyFilter('pixelate')">Pixelate</button>
+                    </div>
+                    <div class="control-group">
+                        <label>Add Text</label>
+                        <input type="text" id="textInput" placeholder="Enter text" class="text-input">
+                        <button class="grid-btn" onclick="addText()">Add Text</button>
+                    </div>
+                </div>
+
+                <!-- Selection Panel -->
+                <div class="panel-section" id="selection-panel">
+                    <h4>Selection Tools</h4>
+                    <div class="tool-grid">
+                        <button class="grid-btn selection-tool active" data-tool="rectangle" onclick="setSelectionTool('rectangle')">Rectangle</button>
+                        <button class="grid-btn selection-tool" data-tool="ellipse" onclick="setSelectionTool('ellipse')">Ellipse</button>
+                        <button class="grid-btn selection-tool" data-tool="lasso" onclick="setSelectionTool('lasso')">Lasso</button>
+                        <button class="grid-btn selection-tool" data-tool="magic" onclick="setSelectionTool('magic')">Magic Wand</button>
+                    </div>
+                    <div class="control-group">
+                        <label>Tolerance: <span id="toleranceValue">20</span></label>
+                        <input type="range" min="1" max="100" value="20" class="slider" id="toleranceSlider">
+                    </div>
+                    <div class="control-group">
+                        <label>Feather: <span id="featherValue">0</span>px</label>
+                        <input type="range" min="0" max="50" value="0" class="slider" id="featherSlider">
+                    </div>
+                    <div class="tool-grid">
+                        <button class="grid-btn" onclick="selectAll()">Select All</button>
+                        <button class="grid-btn" onclick="clearSelection()">Clear</button>
+                        <button class="grid-btn" onclick="invertSelection()">Invert</button>
+                        <button class="grid-btn" onclick="expandSelection()">Expand</button>
+                        <button class="grid-btn" onclick="contractSelection()">Contract</button>
+                        <button class="grid-btn" onclick="copySelection()">Copy</button>
+                    </div>
+                </div>
+
+                <!-- Filters Panel -->
+                <div class="panel-section" id="filters-panel">
+                    <h4>Advanced Filters</h4>
+                    <div class="filter-grid">
+                        <button class="filter-btn" onclick="applyFilter('vintage')">Vintage</button>
+                        <button class="filter-btn" onclick="applyFilter('cold')">Cold Tone</button>
+                        <button class="filter-btn" onclick="applyFilter('warm')">Warm Tone</button>
+                        <button class="filter-btn" onclick="applyFilter('dramatic')">Dramatic</button>
+                        <button class="filter-btn" onclick="applyFilter('soft')">Soft Focus</button>
+                        <button class="filter-btn" onclick="applyFilter('vignette')">Vignette</button>
+                    </div>
+                    <div class="control-group">
+                        <label>Noise Reduction: <span id="noiseValue">0</span></label>
+                        <input type="range" min="0" max="100" value="0" class="slider" id="noiseSlider">
+                    </div>
+                    <div class="control-group">
+                        <label>Film Grain: <span id="grainValue">0</span></label>
+                        <input type="range" min="0" max="100" value="0" class="slider" id="grainSlider">
+                    </div>
+                </div>
+
+                <!-- Text Panel -->
+                <div class="panel-section" id="text-panel">
+                    <h4>Text & Typography</h4>
+                    <div class="control-group">
+                        <label>Text Content</label>
+                        <input type="text" id="textContentInput" placeholder="Enter your text" class="text-input">
+                    </div>
+                    <div class="control-group">
+                        <label>Font Size: <span id="fontSizeValue">30</span>px</label>
+                        <input type="range" min="12" max="100" value="30" class="slider" id="fontSizeSlider">
+                    </div>
+                    <div class="control-group">
+                        <label>Font Family</label>
+                        <select id="fontFamilySelect" class="text-input">
+                            <option value="Arial">Arial</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                            <option value="Helvetica">Helvetica</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Verdana">Verdana</option>
+                        </select>
+                    </div>
+                    <div class="tool-grid">
+                        <button class="grid-btn" onclick="setTextStyle('bold')">Bold</button>
+                        <button class="grid-btn" onclick="setTextStyle('italic')">Italic</button>
+                        <button class="grid-btn" onclick="setTextColor('#ffffff')">White</button>
+                        <button class="grid-btn" onclick="setTextColor('#000000')">Black</button>
+                    </div>
+                    <button class="grid-btn" onclick="addStyledText()">Add Text</button>
+                </div>
+
+                <!-- Advanced Panel -->
+                <div class="panel-section" id="advanced-panel">
+                    <h4>Advanced Tools</h4>
+                    <div class="tool-grid">
+                        <button class="grid-btn" onclick="batchProcess()">Batch Process</button>
+                        <button class="grid-btn" onclick="createHDR()">HDR Effect</button>
+                        <button class="grid-btn" onclick="panoramaStitch()">Panorama</button>
+                        <button class="grid-btn" onclick="rawProcess()">RAW Process</button>
+                    </div>
+                    <div class="control-group">
+                        <label>Lens Correction</label>
+                        <input type="range" min="0" max="100" value="0" class="slider" id="lensSlider">
+                    </div>
+                    <div class="control-group">
+                        <label>Chromatic Aberration</label>
+                        <input type="range" min="0" max="100" value="0" class="slider" id="chromaticSlider">
+                    </div>
+                    <div class="tool-grid">
+                        <button class="grid-btn" onclick="autoEnhance()">Auto Enhance</button>
+                        <button class="grid-btn" onclick="contentAwareFill()">Content Fill</button>
+                    </div>
+                </div>
+
+                <!-- Export Panel -->
+                <div class="panel-section" id="export-panel">
+                    <h4>Export Options</h4>
+                    <div class="control-group">
+                        <label>Format</label>
+                        <select id="exportFormat" class="text-input">
+                            <option value="png">PNG</option>
+                            <option value="jpg">JPG</option>
+                            <option value="webp">WebP</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>Quality: <span id="qualityValue">90</span>%</label>
+                        <input type="range" min="10" max="100" value="90" class="slider" id="qualitySlider">
+                    </div>
+                    <div class="tool-grid">
+                        <button class="grid-btn" onclick="exportImage()">Download</button>
+                        <button class="grid-btn" onclick="shareImage()">Share</button>
+                    </div>
+                </div>
+
+                <!-- AI Panel -->
+                <div class="panel-section" id="ai-panel">
+                    <h4>AI Tools</h4>
+                    <div class="tool-grid">
+                        <button class="grid-btn" onclick="aiEnhance()">AI Enhance</button>
+                        <button class="grid-btn" onclick="removeBackground()">Remove BG</button>
+                        <button class="grid-btn" onclick="upscaleImage()">AI Upscale</button>
+                        <button class="grid-btn" onclick="faceRetouch()">Face Retouch</button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Bottom Toolbar -->
+    <div class="bottom-toolbar">
+        <div class="toolbar-left">
+            <div class="zoom-control">
+                <span>Zoom:</span>
+                <input type="range" min="10" max="500" value="100" class="zoom-slider">
+                <span>100%</span>
+            </div>
+        </div>
+        <div class="toolbar-center">
+            <div class="image-info">
+                <span>1920x1080 • 2.5MB • JPG</span>
+            </div>
+        </div>
+        <div class="toolbar-right">
+            <button class="action-btn save">Save</button>
+            <button class="action-btn export">Export</button>
+            <button class="action-btn share">Share</button>
+        </div>
+    </div>
+
+    <script src="photo-editor.js"></script>
+    <script src="photo-editor-functionality.js"></script>
+    <script src="additional-functions.js"></script>
+    <script src="enhanced-functionality.js"></script>
+    <script src="selection-tools.js"></script>
+</body>
+</html>

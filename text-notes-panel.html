@@ -1,0 +1,72 @@
+<!-- Text Notes Panel -->
+<div class="panel-section" id="textNotesPanel">
+    <div class="panel-header">
+        <h3>Text Notes</h3>
+        <button class="panel-toggle">−</button>
+    </div>
+    <div class="panel-content">
+        <div class="control-group">
+            <button class="control-btn primary" onclick="addTextNote()">
+                <i class="icon">📝</i>
+                Add Note
+            </button>
+        </div>
+        
+        <div class="control-group">
+            <label>Text Color</label>
+            <div class="color-input-wrapper">
+                <input type="color" id="noteTextColor" value="#ffffff" onchange="updateSelectedNoteColor(this.value)">
+                <span class="color-preview"></span>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label>Font Size</label>
+            <div class="slider-control">
+                <input type="range" id="noteFontSize" min="10" max="48" value="16" 
+                       oninput="updateSelectedNoteFontSize(this.value); this.nextElementSibling.textContent = this.value + 'px'">
+                <span class="slider-value">16px</span>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label>Background</label>
+            <div class="color-input-wrapper">
+                <input type="color" id="noteBackgroundColor" value="#000000" onchange="updateSelectedNoteBackground('rgba(' + hexToRgb(this.value).r + ',' + hexToRgb(this.value).g + ',' + hexToRgb(this.value).b + ',0.7)')">
+                <span class="color-preview"></span>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label>Background Opacity</label>
+            <div class="slider-control">
+                <input type="range" id="noteOpacity" min="0" max="100" value="70" 
+                       oninput="updateNoteOpacity(this.value); this.nextElementSibling.textContent = this.value + '%'">
+                <span class="slider-value">70%</span>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <div class="button-row">
+                <button class="control-btn secondary" onclick="deleteSelectedNote()">
+                    <i class="icon">🗑️</i>
+                    Delete
+                </button>
+                <button class="control-btn secondary" onclick="clearAllTextNotes()">
+                    <i class="icon">🧹</i>
+                    Clear All
+                </button>
+            </div>
+        </div>
+        
+        <div class="help-text">
+            <p><strong>How to use:</strong></p>
+            <ul>
+                <li>Double-click canvas to add note</li>
+                <li>Click and drag to move notes</li>
+                <li>Double-click note to edit text</li>
+                <li>Press Delete key to remove selected note</li>
+            </ul>
+        </div>
+    </div>
+</div>

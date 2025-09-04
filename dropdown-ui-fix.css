@@ -1,0 +1,125 @@
+/* Text Animation Dropdown UI Fix */
+#textAnimationSelect {
+    width: 100%;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+    padding-right: 32px;
+}
+
+#textAnimationSelect:hover {
+    border-color: #00ff88;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+#textAnimationSelect:focus {
+    outline: none;
+    border-color: #00ff88;
+    box-shadow: 0 0 0 2px rgba(0, 255, 136, 0.2);
+}
+
+#textAnimationSelect option {
+    background: #1a1a2e;
+    color: #ffffff;
+    padding: 8px;
+}
+
+/* Animation controls styling */
+.animation-controls {
+    margin-top: 12px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.animation-controls label {
+    color: #00ff88;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#animDurationSlider {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    outline: none;
+    -webkit-appearance: none;
+    margin: 8px 0;
+}
+
+#animDurationSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    background: #00ff88;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#animDurationSlider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: #00ff88;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+.animation-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+#previewTextAnim, #stopTextAnim {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#previewTextAnim {
+    background: linear-gradient(135deg, #00ff88, #00cc6a);
+    color: #000000;
+}
+
+#previewTextAnim:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 255, 136, 0.3);
+}
+
+#stopTextAnim {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#stopTextAnim:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Fix for text panel integration */
+.text-panel .control-group {
+    margin-bottom: 16px;
+}
+
+.text-panel .control-group:last-child {
+    margin-bottom: 0;
+}

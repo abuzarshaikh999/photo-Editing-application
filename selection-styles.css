@@ -1,0 +1,280 @@
+/* Enhanced Selection Tool Styles */
+
+/* Selection Canvas Overlay */
+.selection-overlay {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    pointer-events: none !important;
+    z-index: 10 !important;
+    image-rendering: pixelated !important;
+}
+
+/* Canvas Cursor States */
+#mainCanvas {
+    cursor: default;
+    transition: cursor 0.1s ease;
+}
+
+#mainCanvas.selection-active {
+    cursor: crosshair;
+}
+
+#mainCanvas.magic-wand {
+    cursor: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcgMTdMMTcgN00xNyA3SDE0TTEzIDdWMTBNMTEgMTVIMTRNMTEgMTVWMTJNMTEgMTVMOCAxOCIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K") 12 12, pointer;
+}
+
+#mainCanvas.lasso-tool {
+    cursor: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMTMuMDkgOC4yNkwyMCA5TDEzLjA5IDE1Ljc0TDEyIDIyTDEwLjkxIDE1Ljc0TDQgOUwxMC45MSA4LjI2TDEyIDJaIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0iIzAwMCIvPgo8L3N2Zz4K") 12 12, crosshair;
+}
+
+/* Selection Tool Buttons */
+.selection-tool {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.selection-tool.active {
+    background: rgba(102, 126, 234, 0.5) !important;
+    border-color: #667eea !important;
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.3);
+}
+
+.selection-tool:hover {
+    background: rgba(102, 126, 234, 0.3);
+    transform: translateY(-1px);
+}
+
+/* Selection Panel Enhancements */
+#selection-panel .control-group {
+    margin-bottom: 16px;
+}
+
+#selection-panel .tool-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+#selection-panel .grid-btn {
+    padding: 10px;
+    font-size: 12px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+/* Tolerance and Feather Controls */
+.tolerance-control,
+.feather-control {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.tolerance-control label,
+.feather-control label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.tolerance-control .slider,
+.feather-control .slider {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.tolerance-control .slider::-webkit-slider-thumb,
+.feather-control .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Selection Actions */
+.selection-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.selection-actions .grid-btn {
+    padding: 8px 12px;
+    font-size: 11px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.selection-actions .grid-btn:hover {
+    background: rgba(102, 126, 234, 0.3);
+    border-color: #667eea;
+    transform: translateY(-1px);
+}
+
+/* Marching Ants Animation */
+@keyframes marchingAnts {
+    0% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: 16; }
+}
+
+.marching-ants {
+    stroke: #fff;
+    stroke-width: 2;
+    stroke-dasharray: 8, 8;
+    fill: none;
+    animation: marchingAnts 0.5s linear infinite;
+}
+
+.marching-ants-shadow {
+    stroke: #000;
+    stroke-width: 1;
+    stroke-dasharray: 8, 8;
+    stroke-dashoffset: 8;
+    fill: none;
+    animation: marchingAnts 0.5s linear infinite reverse;
+}
+
+/* Selection Info Display */
+.selection-info {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: monospace;
+    pointer-events: none;
+    z-index: 15;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.selection-info.visible {
+    opacity: 1;
+}
+
+/* Mobile Selection Enhancements */
+@media (max-width: 768px) {
+    .selection-tool {
+        min-height: 44px;
+        min-width: 44px;
+        font-size: 14px;
+    }
+    
+    .tolerance-control,
+    .feather-control {
+        padding: 16px;
+    }
+    
+    .tolerance-control .slider::-webkit-slider-thumb,
+    .feather-control .slider::-webkit-slider-thumb {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .selection-actions {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .selection-actions .grid-btn {
+        padding: 12px;
+        font-size: 14px;
+        min-height: 44px;
+    }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+    .selection-tool {
+        min-height: 48px;
+        min-width: 48px;
+    }
+    
+    .tolerance-control .slider,
+    .feather-control .slider {
+        height: 8px;
+    }
+    
+    .tolerance-control .slider::-webkit-slider-thumb,
+    .feather-control .slider::-webkit-slider-thumb {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .selection-tool.active {
+        background: #fff !important;
+        color: #000 !important;
+        border: 3px solid #000 !important;
+    }
+    
+    .marching-ants {
+        stroke: #fff;
+        stroke-width: 3;
+    }
+    
+    .marching-ants-shadow {
+        stroke: #000;
+        stroke-width: 2;
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .marching-ants,
+    .marching-ants-shadow {
+        animation: none;
+    }
+    
+    .selection-tool {
+        transition: none;
+    }
+}
+
+/* Light theme adjustments */
+body[data-theme="light"] .tolerance-control,
+body[data-theme="light"] .feather-control {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+body[data-theme="light"] .selection-actions .grid-btn {
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: #212529;
+}
+
+body[data-theme="light"] .selection-actions .grid-btn:hover {
+    background: rgba(102, 126, 234, 0.2);
+    color: #fff;
+}
+
+body[data-theme="light"] .selection-info {
+    background: rgba(255, 255, 255, 0.9);
+    color: #212529;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
